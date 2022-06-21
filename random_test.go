@@ -2,56 +2,145 @@ package random_test
 
 import (
 	"math/rand"
-	"random"
+	"random/mt19937"
 	"testing"
+
+	"random"
 )
 
 var (
-	rng = random.New(rand.NewSource(5489))
+	seed        = int64(5489)
+	rng         = random.New(rand.NewSource(seed))
+	rng_mt19937 = random.New(mt19937.New())
 )
 
-// func Test_Float64_Test(t *testing.T) {
-// 	for n := 0; n < 100; n++ {
-// 		fmt.Printf("%10.8f\t", rng.Float64_Test())
+func TestInt63(t *testing.T) {
+	rng.Seed(seed)
+	rng.Int63()
+}
 
-// 		if (n % 5) == 4 {
-// 			fmt.Println()
-// 		}
-// 	}
-// }
+func TestUint64(t *testing.T) {
+	rng.Seed(seed)
+	rng.Uint64()
+}
 
-// func Benchmark_Float64_Test(b *testing.B) {
-// 	for n := b.N; n > 0; n-- {
-// 		rng.Float64_Test()
-// 	}
-// }
+func TestUint32(t *testing.T) {
+	rng.Seed(seed)
+	rng.Uint32()
+}
 
-func Benchmark_GoRand(b *testing.B) {
-	for n := b.N; n > 0; n-- {
-		rng.Int63()
+func TestInt31(t *testing.T) {
+	rng.Seed(seed)
+	rng.Int31()
+}
+
+func TestInt(t *testing.T) {
+	rng.Seed(seed)
+	rng.Int()
+}
+
+func TestInt63n(t *testing.T) {
+	rng.Seed(seed)
+	for n := 0; n < 100; n++ {
+		n := rng.Int63n(2)
+		if n < 0 || n >= 2 {
+			panic("The Range is not between [0, 2).")
+		}
 	}
 }
 
-func Benchmark_Float64(b *testing.B) {
-	for n := b.N; n > 0; n-- {
-		rng.Float64()
+func TestInt63n_Panic(t *testing.T) {
+	rng.Seed(seed)
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic.")
+		}
+	}()
+
+	rng.Int63n(-32757)
+}
+
+func TestInt31n(t *testing.T) {
+	rng.Seed(seed)
+	for i := 0; i < 100; i++ {
+		n := rng.Int31n(2)
+		if n < 0 || n >= 2 {
+			panic("The Range is not between [0, 2).")
+		}
 	}
 }
 
-// func Benchmark_GoRand2(b *testing.B) {
-// 	rng2 := rand.New(rand.NewSource(5489))
-// 	b.RunParallel(func(pb *testing.PB) {
+func TestInt31n_Panic(t *testing.T) {
+	rng.Seed(seed)
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic.")
+		}
+	}()
 
-// 		for pb.Next() {
-// 			rng2.Int63()
-// 		}
-// 	})
-// }
+	rng.Int63n(-32757)
+}
 
-// func Benchmark_GoRand(b *testing.B) {
-// 	b.RunParallel(func(pb *testing.PB) {
-// 		for pb.Next() {
-// 			rng.Int63()
-// 		}
-// 	})
-// }
+func TestIntn(t *testing.T) {
+	rng.Seed(seed)
+	for i := 0; i < 100; i++ {
+		n := rng.Intn(2)
+		if n < 0 || n >= 2 {
+			panic("The Range is not between [0, 2).")
+		}
+	}
+}
+
+func TestIntn_Panic(t *testing.T) {
+	rng.Seed(seed)
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic.")
+		}
+	}()
+
+	rng.Intn(-32757)
+}
+
+func TestFloat64(t *testing.T) {
+	rng.Seed(seed)
+	rng.Float64()
+}
+
+func TestFloat32(t *testing.T) {
+	rng.Seed(seed)
+	rng.Float32()
+}
+
+func TestPerm(t *testing.T) {
+	rng.Seed(seed)
+	for i := 0; i < 100; i++ {
+		n := rng.Perm(5)
+
+		if len(n) != 5 {
+			panic("The length is not 5.")
+		}
+		for _, v := range n {
+			if v < 0 || v >= 5 {
+				panic("The Range is not between [0, 5).")
+			}
+		}
+	}
+}
+
+func TestShuffle(t *testing.T) {
+	rng.Seed(seed)
+	n := rng.Perm(5)
+	rng.Shuffle(len(n), func(i, j int) {
+		n[i], n[j] = n[j], n[i]
+	})
+}
+
+func TestRead(t *testing.T) {
+	rng.Seed(seed)
+	n := make([]byte, 5)
+	_, err := rng.Read(n)
+	if err != nil {
+		panic(err)
+	}
+}

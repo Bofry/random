@@ -66,7 +66,7 @@ func (r *Random) Int() int {
 //	input:
 //	 n	-- upper limit.
 // 	returns:
-//	 --	an int64  between [0, n).
+//	 --	an int64 between [0, n).
 // 	panics:
 //	 --	if n<= 0.
 func (r *Random) Int63n(n int64) int64 {

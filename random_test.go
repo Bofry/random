@@ -2,10 +2,11 @@ package random_test
 
 import (
 	"math/rand"
-	"random/mt19937"
 	"testing"
 
-	"random"
+	"github.com/bofry/random/mt19937"
+
+	"github.com/bofry/random"
 )
 
 var (

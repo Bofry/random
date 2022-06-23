@@ -2,6 +2,66 @@
 
 `Random` is a pseudo-random number generator(PRNG). its functions come from standard Go functions from package `math/rand` and copy the some functions from [gosl/rnd](https://github.com/cpmech/gosl/tree/main/rnd).
 
+---
+
+## Install
+
+```console
+go get -u -v github.com/bofry/random
+```
+
+## Usage
+
+Let's start with a trivial example:
+
+```go
+
+package main
+
+import (
+    "fmt"
+
+    "github.com/bofry/random"
+    "github.com/bofry/random/mt19937"
+)
+
+func main() {
+    rng := random.New(mt19937.New())
+
+    // range [0,10](inclusive)
+    println("Int63r(0,10)(inclusive) return", rng.Int63r(0, 10))
+
+    // range [0,10)(not inclusive)
+    println("Int63n(10)(not inclusive) return", rng.Int63n(10))
+
+    // Random pick with weight
+    weights := []int64{1, 2, 3, 4}
+    stat := make([]float64, len(weights))
+    round := 10000000
+    for i := 1; i < round; i++ {
+        stat[rng.Int64w(weights)]++
+    }
+    for _, v := range stat {
+        fmt.Printf("%.4f \t", v/float64(round))
+    }
+}
+
+
+
+```
+
+Output:
+
+```console
+
+go run app.
+Int63r(0,10)(inclusive) return 7
+Int63n(10)(not inclusive) return 4
+0.1002  0.2001  0.3000  0.3997  %    
+
+```
+
+
 ## Benckmark
 
 ```console

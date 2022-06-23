@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"random/mt19937"
+	"github.com/bofry/random/mt19937"
 )
 
 // http://www.math.sci.hiroshima-u.ac.jp/m-mat/MT/mt19937-64.out.txt

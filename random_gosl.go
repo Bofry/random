@@ -35,8 +35,8 @@ package random
 
 // Int63r - generates pseudo random int64 between low and high.
 //  input:
-//   low  -- lower limit.
-//   high -- upper limit.
+//   low  -- lower bound.
+//   high -- upper bound.
 //  returns:
 //	 -- an int64 between [low, high].
 func (r *Random) Int63r(low, high int64) int64 {
@@ -46,8 +46,8 @@ func (r *Random) Int63r(low, high int64) int64 {
 // Int63s -
 // generates pseudo Randomom integers between low and high.
 //  input:
-//   low    -- lower limit.
-//   high   -- upper limit.
+//   low    -- lower bound.
+//   high   -- upper bound.
 //  output:
 //   values -- slice to be filled with len(values) numbers.
 func (r *Random) Int63s(values []int64, low, high int64) {
@@ -75,8 +75,8 @@ func (r *Random) Int63Shuffle(values []int64) {
 // Uint32 -
 // generates pseudo Randomom uint32 between low and high.
 //  input:
-//   low  -- lower limit.
-//   high -- upper limit.
+//   low  -- lower bound.
+//   high -- upper bound.
 //  returns:
 //	 -- an uint32 between [low, high].
 func (r *Random) Uint32r(low, high uint32) uint32 {
@@ -86,8 +86,8 @@ func (r *Random) Uint32r(low, high uint32) uint32 {
 // Uint32s -
 // generates pseudo Randomom integers between low and high.
 //  input:
-//   low    -- lower limit.
-//   high   -- upper limit.
+//   low    -- lower bound.
+//   high   -- upper bound.
 //  output:
 //   values -- slice to be filled with len(values) numbers.
 func (r *Random) Uint32s(values []uint32, low, high uint32) {
@@ -115,8 +115,8 @@ func (r *Random) Uint32Shuffle(values []uint32) {
 // Uint64r -
 // generates pseudo Randomom uint64 between low and high.
 //  input:
-//   low  -- lower limit.
-//   high -- upper limit.
+//   low  -- lower bound.
+//   high -- upper bound.
 //  returns:
 //	 -- an uint64 between [low, high].
 func (r *Random) Uint64r(low, high uint64) uint64 {
@@ -126,8 +126,8 @@ func (r *Random) Uint64r(low, high uint64) uint64 {
 // Uint64s -
 // generates pseudo Randomom integers between low and high.
 //  input:
-//   low    -- lower limit.
-//   high   -- upper limit.
+//   low    -- lower bound.
+//   high   -- upper bound.
 //  output:
 //   values -- slice to be filled with len(values) numbers.
 func (r *Random) Uint64s(values []uint64, low, high uint64) {
@@ -155,8 +155,8 @@ func (r *Random) Uint64Shuffle(values []uint64) {
 // Int31r -
 // is int range generates pseudo Randomom int32 between low and high.
 //  input:
-//   low  -- lower limit.
-//   high -- upper limit.
+//   low  -- lower bound.
+//   high -- upper bound.
 //  returns:
 //	 -- an int32 between [low, high].
 func (r *Random) Int31r(low, high int32) int32 {
@@ -166,8 +166,8 @@ func (r *Random) Int31r(low, high int32) int32 {
 // Int31s -
 // generates pseudo Randomom integers between low and high.
 //  input:
-//   low    -- lower limit.
-//   high   -- upper limit.
+//   low    -- lower bound.
+//   high   -- upper bound.
 //  output:
 //   values -- slice to be filled with len(values) numbers.
 func (r *Random) Int31s(values []int32, low, high int32) {
@@ -195,8 +195,8 @@ func (r *Random) Int31Shuffle(values []int32) {
 // Intr -
 // is int range generates pseudo Randomom integer between low and high.
 //  input:
-//   low  -- lower limit.
-//   high -- upper limit.
+//   low  -- lower bound.
+//   high -- upper bound.
 //  returns:
 //	 -- an int between [low, high].
 func (r *Random) Intr(low, high int) int {
@@ -206,8 +206,8 @@ func (r *Random) Intr(low, high int) int {
 // Ints -
 // generates pseudo Randomom integers between low and high.
 //  input:
-//   low    -- lower limit.
-//   high   -- upper limit.
+//   low    -- lower bound.
+//   high   -- upper bound.
 //  output:
 //   values -- slice to be filled with len(values) numbers.
 func (r *Random) Ints(values []int, low, high int) {
@@ -234,8 +234,8 @@ func (r *Random) IntShuffle(values []int) {
 // Float64r -
 // generates a pseudo Randomom real number between low and high; i.e. in [low, right)
 //  input:
-//   low  -- lower limit. (closed)
-//   high -- upper limit. (open)
+//   low  -- lower bound. (closed)
+//   high -- upper bound. (open)
 //  returns:
 //	 -- an int between [low, high].
 func (r *Random) Float64r(low, high float64) float64 {
@@ -245,8 +245,8 @@ func (r *Random) Float64r(low, high float64) float64 {
 // Float64s -
 // generates pseudo Randomom real numbers between low and high; i.e. in [low, right)
 //  input:
-//   low  -- lower limit. (closed)
-//   high -- upper limit. (open)
+//   low  -- lower bound. (closed)
+//   high -- upper bound. (open)
 //  output:
 //   values -- slice to be filled with len(values) numbers
 func (r *Random) Float64s(values []float64, low, high float64) {
@@ -268,10 +268,11 @@ func (r *Random) Float64Shuffle(values []float64) {
 	}
 }
 
-// Float32r generates a pseudo Randomom real number between low and high; i.e. in [low, right)
+// Float32r -
+// generates a pseudo Randomom real number between low and high; i.e. in [low, right)
 //  Input:
-//   low  -- lower limit. (closed)
-//   high -- upper limit. (open)
+//   low  -- lower bound. (closed)
+//   high -- upper bound. (open)
 //  returns:
 //	 -- an int between [low, high].
 func (r *Random) Float32r(low, high float32) float32 {
@@ -281,8 +282,8 @@ func (r *Random) Float32r(low, high float32) float32 {
 // Float32s -
 // generates pseudo Randomom real numbers between low and high; i.e. in [low, right)
 //  input:
-//   low  -- lower limit. (closed)
-//   high -- upper limit. (open)
+//   low  -- lower bound. (closed)
+//   high -- upper bound. (open)
 //  output:
 //   values -- slice to be filled with len(values) numbers.
 func (r *Random) Float32s(values []float32, low, high float32) {

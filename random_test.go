@@ -9,9 +9,11 @@ import (
 )
 
 var (
-	seed        = int64(5489)
-	rng         = random.New(rand.NewSource(seed))
-	rng_mt19937 = random.New(mt19937.New())
+	seed             = int64(5489)
+	rng              = random.New(rand.NewSource(seed))
+	rng_safe         = random.NewthreadSafeRandom(rand.NewSource(seed))
+	rng_mt19937      = random.New(mt19937.New())
+	rng_safe_mt19937 = random.NewthreadSafeRandom(mt19937.New())
 )
 
 func TestInt63(t *testing.T) {

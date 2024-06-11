@@ -2,8 +2,8 @@ package mt19937_test
 
 import (
 	"fmt"
-	"io/ioutil"
 	"math/rand"
+	"os"
 	"testing"
 
 	"github.com/bofry/random/mt19937"
@@ -15,7 +15,7 @@ func TestOutputMT19937_64_1000(t *testing.T) {
 	init := []uint64{0x12345, 0x23456, 0x34567, 0x45678}
 
 	mt := mt19937.New()
-	mt.SeedbyArray(init)
+	mt.SeedFromSlice(init)
 	output := fmt.Sprint("ref: http://www.math.sci.hiroshima-u.ac.jp/m-mat/MT/mt19937-64.out.txt\n\n")
 
 	output += fmt.Sprint("1000 outputs of genrand64_int64()\n")
@@ -35,7 +35,7 @@ func TestOutputMT19937_64_1000(t *testing.T) {
 		}
 	}
 
-	err := ioutil.WriteFile("./mt19937-64.out.txt", []byte(output), 0644)
+	err := os.WriteFile("./mt19937-64.out.txt", []byte(output), 0644)
 	if err != nil {
 		panic(err)
 	}

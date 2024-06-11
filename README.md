@@ -15,14 +15,13 @@ go get -u -v github.com/bofry/random
 Let's start with a trivial example:
 
 ```go
-
 package main
 
 import (
     "fmt"
 
-    "github.com/bofry/random"
-    "github.com/bofry/random/mt19937"
+    "[github.com/bofry/random](https://github.com/bofry/random)"
+    "[github.com/bofry/random/mt19937](https://github.com/bofry/random/mt19937)"
 )
 
 func main() {
@@ -45,62 +44,53 @@ func main() {
         fmt.Printf("%.4f \t", v/float64(round))
     }
 }
-
-
-
 ```
 
-Output:
+## Output
 
 ```console
-
 go run app.
 Int63r(0,10)(inclusive) return 7
 Int63n(10)(not inclusive) return 4
 0.1002  0.2001  0.3000  0.3997  %    
-
 ```
-
 
 ## Benckmark
 
 ```console
-
 Running tool: go test -benchmem -bench .
 
 goos: darwin
-goarch: amd64
-pkg: random
-cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
-Benchmark_Go_Seed-12                    133672          7807 ns/op      0 B/op        0 allocs/op
-Benchmark_Go_Int63-12                   374727135       3.227 ns/op     0 B/op        0 allocs/op
-Benchmark_Go_Uint64-12                  322754622       3.706 ns/op     0 B/op        0 allocs/op
-Benchmark_Go_Float64-12                 277221798       4.316 ns/op     0 B/op        0 allocs/op
-Benchmark_Go_Safe_Seed-12               155568          7775 ns/op      0 B/op        0 allocs/op
-Benchmark_Go_Safe_Int63-12              83138834        14.58 ns/op     0 B/op        0 allocs/op
-Benchmark_Go_Safe_Uint64-12             79397599        15.32 ns/op     0 B/op        0 allocs/op
-Benchmark_Go_Safe_Float64-12            78361706        14.87 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Seed-12               1690099         710.6 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Int63-12              225984925       5.316 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Uint64-12             194375786       6.178 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Float64-12            178710583       6.718 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Safe_Seed-12          1692319         720.5 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Safe_Int63-12         76736385        15.83 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Safe_Uint64-12        71111898        16.84 ns/op     0 B/op        0 allocs/op
-Benchmark_MT19937_Safe_Float64-12       71303149        16.58 ns/op     0 B/op        0 allocs/op
-Benchmark_Float64w-12                   57282123        20.13 ns/op     0 B/op        0 allocs/op
-Benchmark_Float32w-12                   56282934        21.14 ns/op     0 B/op        0 allocs/op
-Benchmark_Uint64w-12                    48131596        25.00 ns/op     0 B/op        0 allocs/op
-Benchmark_Uint32w-12                    58037516        21.55 ns/op     0 B/op        0 allocs/op
-Benchmark_Int64w-12                     37663840        32.38 ns/op     0 B/op        0 allocs/op
-Benchmark_Int32w-12                     46440220        22.44 ns/op     0 B/op        0 allocs/op
-Benchmark_Intw-12                       53368224        22.63 ns/op     0 B/op        0 allocs/op
-Benchmark_Test_ThreadSafe_Seed-12       1607907         763.0 ns/op     0 B/op        0 allocs/op
-Benchmark_Test_ThreadSafe_Int63-12      22007811        52.48 ns/op     0 B/op        0 allocs/op
-Benchmark_Test_ThreadSafe_Uint64-12     22034865        54.91 ns/op     0 B/op        0 allocs/op
-Benchmark_Test_ThreadSafe_Float64-12    21995600        53.93 ns/op     0 B/op        0 allocs/op
+goarch: arm64
+pkg: [github.com/bofry/random](https://github.com/bofry/random)
+Benchmark_Go_Seed                         107834             10987 ns/op               0 B/op          0 allocs/op
+Benchmark_Go_Int63                      414903625                2.873 ns/op           0 B/op          0 allocs/op
+Benchmark_Go_Uint64                     379880875                3.154 ns/op           0 B/op          0 allocs/op
+Benchmark_Go_Float64                    351158229                3.432 ns/op           0 B/op          0 allocs/op
+Benchmark_Go_Safe_Seed                    111523             10904 ns/op               0 B/op          0 allocs/op
+Benchmark_Go_Safe_Int63                 83442944                13.88 ns/op            0 B/op          0 allocs/op
+Benchmark_Go_Safe_Uint64                81863529                13.91 ns/op            0 B/op          0 allocs/op
+Benchmark_Go_Safe_Float64               83060790                13.94 ns/op            0 B/op          0 allocs/op
+Benchmark_MT19937_Seed                   1000000              1032 ns/op               0 B/op          0 allocs/op
+Benchmark_MT19937_Int63                 318810306                3.752 ns/op           0 B/op          0 allocs/op
+Benchmark_MT19937_Uint64                296913031                4.033 ns/op           0 B/op          0 allocs/op
+Benchmark_MT19937_Float64               272669924                4.288 ns/op           0 B/op          0 allocs/op
+Benchmark_MT19937_Safe_Seed              1000000              1072 ns/op               0 B/op          0 allocs/op
+Benchmark_MT19937_Safe_Int63            74343490                15.08 ns/op            0 B/op          0 allocs/op
+Benchmark_MT19937_Safe_Uint64           75081927                14.88 ns/op            0 B/op          0 allocs/op
+Benchmark_MT19937_Safe_Float64          78464281                14.89 ns/op            0 B/op          0 allocs/op
+Benchmark_Float64w                      60282195                17.16 ns/op            0 B/op          0 allocs/op
+Benchmark_Float32w                      31604313                36.71 ns/op           32 B/op          1 allocs/op
+Benchmark_Uint64w                       82728193                14.20 ns/op            0 B/op          0 allocs/op
+Benchmark_Uint32w                       34264460                35.76 ns/op           32 B/op          1 allocs/op
+Benchmark_Int64w                        30533314                38.30 ns/op           32 B/op          1 allocs/op
+Benchmark_Int32w                        20278176                58.50 ns/op           64 B/op          2 allocs/op
+Benchmark_Intw                          30103322                38.97 ns/op           32 B/op          1 allocs/op
+Benchmark_Test_ThreadSafe_Seed            111788             10572 ns/op               0 B/op          0 allocs/op
+Benchmark_Test_ThreadSafe_Int63         83918524                13.91 ns/op            0 B/op          0 allocs/op
+Benchmark_Test_ThreadSafe_Uint64        83163926                13.86 ns/op            0 B/op          0 allocs/op
+Benchmark_Test_ThreadSafe_Float64       83615436                13.90 ns/op            0 B/op          0 allocs/op
 PASS
-coverage: 29.1% of statements
-ok   random 38.310s
-
+coverage: 20.3% of statements
+ok      [github.com/bofry/random](https://github.com/bofry/random) 34.390s
 ```

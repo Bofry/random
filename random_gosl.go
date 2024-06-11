@@ -33,143 +33,85 @@
 
 package random
 
-// Int63r - generates pseudo random int64 between low and high.
-//  input:
-//   low  -- lower bound.
-//   high -- upper bound.
-//  returns:
-//	 -- an int64 between [low, high].
+import "math/big"
+
+// Int63r generates a pseudo-random int64 between low (inclusive) and high (inclusive).
 func (r *Random) Int63r(low, high int64) int64 {
-	return r.Int63()%(high-low+1) + low
+	if low > high {
+		low, high = high, low // Swap if low is greater than high
+	}
+	rangeBig := big.NewInt(0).Sub(big.NewInt(high), big.NewInt(low))
+	rangeBig.Add(rangeBig, big.NewInt(1)) // Add 1 to include high
+	offsetBig := big.NewInt(0).Mod(big.NewInt(r.Int63()), rangeBig)
+	resultBig := big.NewInt(0).Add(offsetBig, big.NewInt(low))
+	return resultBig.Int64()
 }
 
-// Int63s -
-// generates pseudo Randomom integers between low and high.
-//  input:
-//   low    -- lower bound.
-//   high   -- upper bound.
-//  output:
-//   values -- slice to be filled with len(values) numbers.
+// Int63s generates a slice of pseudo-random int64 values between low (inclusive) and high (inclusive).
 func (r *Random) Int63s(values []int64, low, high int64) {
-	if len(values) < 1 {
-		return
-	}
-	for i := 0; i < len(values); i++ {
+	for i := range values {
 		values[i] = r.Int63r(low, high)
 	}
 }
 
-// Int63Shuffle -
-// shuffles a slice of integers.
+// Int63Shuffle shuffles a slice of int64 values.
 func (r *Random) Int63Shuffle(values []int64) {
-	var tmp int64
-	var j int
-	for i := len(values) - 1; i > 0; i-- {
-		j = r.Int() % i
-		tmp = values[j]
-		values[j] = values[i]
-		values[i] = tmp
-	}
+	r.Shuffle(len(values), func(i, j int) { values[i], values[j] = values[j], values[i] })
 }
 
-// Uint32 -
-// generates pseudo Randomom uint32 between low and high.
-//  input:
-//   low  -- lower bound.
-//   high -- upper bound.
-//  returns:
-//	 -- an uint32 between [low, high].
+// Uint32r generates a pseudo-random uint32 between low (inclusive) and high (inclusive).
 func (r *Random) Uint32r(low, high uint32) uint32 {
-	return r.Uint32()%(high-low+1) + low
+	if low > high {
+		low, high = high, low
+	}
+	return low + r.Uint32()%(high-low+1) // No overflow risk with uint32
 }
 
-// Uint32s -
-// generates pseudo Randomom integers between low and high.
-//  input:
-//   low    -- lower bound.
-//   high   -- upper bound.
-//  output:
-//   values -- slice to be filled with len(values) numbers.
+// Uint32s generates a slice of pseudo-random uint32 values between low (inclusive) and high (inclusive).
 func (r *Random) Uint32s(values []uint32, low, high uint32) {
-	if len(values) < 1 {
-		return
-	}
-	for i := 0; i < len(values); i++ {
+	for i := range values {
 		values[i] = r.Uint32r(low, high)
 	}
 }
 
-// Uint32Shuffle -
-// shuffles a slice of integers.
+// Uint32Shuffle shuffles a slice of uint32 values.
 func (r *Random) Uint32Shuffle(values []uint32) {
-	var tmp uint32
-	var j int
-	for i := len(values) - 1; i > 0; i-- {
-		j = r.Int() % i
-		tmp = values[j]
-		values[j] = values[i]
-		values[i] = tmp
-	}
+	r.Shuffle(len(values), func(i, j int) { values[i], values[j] = values[j], values[i] })
 }
 
-// Uint64r -
-// generates pseudo Randomom uint64 between low and high.
-//  input:
-//   low  -- lower bound.
-//   high -- upper bound.
-//  returns:
-//	 -- an uint64 between [low, high].
+// Uint64r generates a pseudo-random uint64 between low (inclusive) and high (inclusive).
 func (r *Random) Uint64r(low, high uint64) uint64 {
-	return r.Uint64()%(high-low+1) + low
+	if low > high {
+		low, high = high, low
+	}
+	rangeBig := big.NewInt(0).Sub(big.NewInt(int64(high)), big.NewInt(int64(low)))
+	rangeBig.Add(rangeBig, big.NewInt(1))
+	offsetBig := big.NewInt(0).Mod(big.NewInt(int64(r.Uint64())), rangeBig)
+	resultBig := big.NewInt(0).Add(offsetBig, big.NewInt(int64(low)))
+	return resultBig.Uint64()
 }
 
-// Uint64s -
-// generates pseudo Randomom integers between low and high.
-//  input:
-//   low    -- lower bound.
-//   high   -- upper bound.
-//  output:
-//   values -- slice to be filled with len(values) numbers.
+// Uint64s generates a slice of pseudo-random uint64 values between low (inclusive) and high (inclusive).
 func (r *Random) Uint64s(values []uint64, low, high uint64) {
-	if len(values) < 1 {
-		return
-	}
-	for i := 0; i < len(values); i++ {
+	for i := range values {
 		values[i] = r.Uint64r(low, high)
 	}
 }
 
-// Uint64Shuffle -
-// shuffles a slice of integers.
+// Uint64Shuffle shuffles a slice of uint64 values.
 func (r *Random) Uint64Shuffle(values []uint64) {
-	var tmp uint64
-	var j int
-	for i := len(values) - 1; i > 0; i-- {
-		j = r.Int() % i
-		tmp = values[j]
-		values[j] = values[i]
-		values[i] = tmp
-	}
+	r.Shuffle(len(values), func(i, j int) { values[i], values[j] = values[j], values[i] })
 }
 
-// Int31r -
-// is int range generates pseudo Randomom int32 between low and high.
-//  input:
-//   low  -- lower bound.
-//   high -- upper bound.
-//  returns:
-//	 -- an int32 between [low, high].
+// Int31r generates a pseudo-random int32 between low (inclusive) and high (inclusive).
 func (r *Random) Int31r(low, high int32) int32 {
-	return r.Int31()%(high-low+1) + low
+	if low > high {
+		low, high = high, low
+	}
+	return low + r.Int31n(high-low+1) // No overflow risk with int31n
 }
 
-// Int31s -
-// generates pseudo Randomom integers between low and high.
-//  input:
-//   low    -- lower bound.
-//   high   -- upper bound.
-//  output:
-//   values -- slice to be filled with len(values) numbers.
+// Int31s generates a slice of pseudo-random int32 values between low (inclusive) and high (inclusive).
 func (r *Random) Int31s(values []int32, low, high int32) {
 	if len(values) < 1 {
 		return
@@ -179,134 +121,72 @@ func (r *Random) Int31s(values []int32, low, high int32) {
 	}
 }
 
-// Int31Shuffle -
-// shuffles a slice of integers.
+// Int31Shuffle shuffles a slice of int32 values.
 func (r *Random) Int31Shuffle(values []int32) {
-	var tmp int32
-	var j int
-	for i := len(values) - 1; i > 0; i-- {
-		j = r.Int() % i
-		tmp = values[j]
-		values[j] = values[i]
-		values[i] = tmp
-	}
+	r.Shuffle(len(values), func(i, j int) { values[i], values[j] = values[j], values[i] })
 }
 
-// Intr -
-// is int range generates pseudo Randomom integer between low and high.
-//  input:
-//   low  -- lower bound.
-//   high -- upper bound.
-//  returns:
-//	 -- an int between [low, high].
+// Intr generates a pseudo-random int between low (inclusive) and high (inclusive).
 func (r *Random) Intr(low, high int) int {
-	return r.Int()%(high-low+1) + low
+	if low > high {
+		low, high = high, low
+	}
+	return low + r.Intn(high-low+1) // No overflow risk with Intn
 }
 
-// Ints -
-// generates pseudo Randomom integers between low and high.
-//  input:
-//   low    -- lower bound.
-//   high   -- upper bound.
-//  output:
-//   values -- slice to be filled with len(values) numbers.
+// Ints generates a slice of pseudo-random int values between low (inclusive) and high (inclusive).
 func (r *Random) Ints(values []int, low, high int) {
-	if len(values) < 1 {
-		return
-	}
-	for i := 0; i < len(values); i++ {
+	for i := range values {
 		values[i] = r.Intr(low, high)
 	}
 }
 
-// IntShuffle -
-// shuffles a slice of integers.
+// IntShuffle shuffles a slice of int values.
 func (r *Random) IntShuffle(values []int) {
-	var j, tmp int
-	for i := len(values) - 1; i > 0; i-- {
-		j = r.Int() % i
-		tmp = values[j]
-		values[j] = values[i]
-		values[i] = tmp
-	}
+	r.Shuffle(len(values), func(i, j int) { values[i], values[j] = values[j], values[i] })
 }
 
-// Float64r -
-// generates a pseudo Randomom real number between low and high; i.e. in [low, right)
-//  input:
-//   low  -- lower bound. (closed)
-//   high -- upper bound. (open)
-//  returns:
-//	 -- an int between [low, high].
+// Float64r generates a pseudo-random float64 in the range [low, high).
 func (r *Random) Float64r(low, high float64) float64 {
+	if low > high {
+		low, high = high, low
+	}
 	return low + (high-low)*r.Float64()
 }
 
-// Float64s -
-// generates pseudo Randomom real numbers between low and high; i.e. in [low, right)
-//  input:
-//   low  -- lower bound. (closed)
-//   high -- upper bound. (open)
-//  output:
-//   values -- slice to be filled with len(values) numbers
+// Float64s fills a slice with pseudo-random float64 values in the range [low, high).
 func (r *Random) Float64s(values []float64, low, high float64) {
-	for i := 0; i < len(values); i++ {
-		values[i] = low + (high-low)*r.Float64()
+	for i := range values {
+		values[i] = r.Float64r(low, high)
 	}
 }
 
-// Float64Shuffle -
-// shuffles a slice of float point numbers
+// Float64Shuffle shuffles a slice of float64 values.
 func (r *Random) Float64Shuffle(values []float64) {
-	var tmp float64
-	var j int
-	for i := len(values) - 1; i > 0; i-- {
-		j = r.Int() % i
-		tmp = values[j]
-		values[j] = values[i]
-		values[i] = tmp
-	}
+	r.Shuffle(len(values), func(i, j int) { values[i], values[j] = values[j], values[i] })
 }
 
-// Float32r -
-// generates a pseudo Randomom real number between low and high; i.e. in [low, right)
-//  Input:
-//   low  -- lower bound. (closed)
-//   high -- upper bound. (open)
-//  returns:
-//	 -- an int between [low, high].
+// Float32r generates a pseudo-random float32 in the range [low, high).
 func (r *Random) Float32r(low, high float32) float32 {
+	if low > high {
+		low, high = high, low
+	}
 	return low + (high-low)*r.Float32()
 }
 
-// Float32s -
-// generates pseudo Randomom real numbers between low and high; i.e. in [low, right)
-//  input:
-//   low  -- lower bound. (closed)
-//   high -- upper bound. (open)
-//  output:
-//   values -- slice to be filled with len(values) numbers.
+// Float32s fills a slice with pseudo-random float32 values in the range [low, high).
 func (r *Random) Float32s(values []float32, low, high float32) {
-	for i := 0; i < len(values); i++ {
-		values[i] = low + (high-low)*r.Float32()
+	for i := range values {
+		values[i] = r.Float32r(low, high)
 	}
 }
 
-// Float32Shuffle -
-// shuffles a slice of float point numbers.
+// Float32Shuffle shuffles a slice of float32 values.
 func (r *Random) Float32Shuffle(values []float32) {
-	var tmp float32
-	var j int
-	for i := len(values) - 1; i > 0; i-- {
-		j = r.Int() % i
-		tmp = values[j]
-		values[j] = values[i]
-		values[i] = tmp
-	}
+	r.Shuffle(len(values), func(i, j int) { values[i], values[j] = values[j], values[i] })
 }
 
-// FlipCoin -
-// generates a Bernoulli variable; throw a coin with probability p.
+// FlipCoin simulates a coin flip with the given probability p of heads (true).
 func (r *Random) FlipCoin(p float64) bool {
 	if p == 1.0 {
 		return true
@@ -314,8 +194,5 @@ func (r *Random) FlipCoin(p float64) bool {
 	if p == 0.0 {
 		return false
 	}
-	if r.Float64() <= p {
-		return true
-	}
-	return false
+	return r.Float64() <= p
 }

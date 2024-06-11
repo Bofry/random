@@ -377,6 +377,17 @@ func (r *threadSafeRandom) FlipCoin(p float64) bool {
 	return r.Float64() <= p
 }
 
+// Uint64n returns a non-negative pseudo-random uint64 in [0, n).
+// Panics if n <= 0.
+func (r *threadSafeRandom) Uint64n(n uint64) uint64 {
+	if n <= 0 {
+		panic("invalid argument to Uint64n")
+	}
+	r.lk.RLock()
+	defer r.lk.RUnlock()
+	return r.rand.Uint64() % n
+}
+
 // Uint32n returns a non-negative pseudo-random uint32 in [0, n).
 // Panics if n <= 0.
 func (r *threadSafeRandom) Uint32n(n uint32) uint32 {
